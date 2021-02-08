@@ -11,12 +11,10 @@ namespace PhpSwaggerAutoTester;
 class Tester
 {
     protected $schema;
-    protected $output;
 
     public function __construct()
     {
-        $this->output = new \Codeception\Lib\Console\Output([]);
-        $this->output->writeln(PHP_EOL);
+        
     }
 
     public function usingSchema(Schema $schema)
@@ -30,7 +28,6 @@ class Tester
     {
         foreach ($this->schema->getPaths() as $path => $methods) {
             foreach ($methods as $method => $schema) {
-                $this->output->writeln('===');
                 $this->{$method . 'Test'}($path, $schema);
             }
         }
