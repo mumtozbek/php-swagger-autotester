@@ -1,0 +1,30 @@
+{
+    "name": "mumtozbek/php-swagger-autotester",
+    "description": "OpenAPI scheme validation and testing library.",
+    "keywords": [
+        "openapi",
+        "swagger",
+        "php"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mumtoz Kodirov",
+            "homepage": "http://mumtozbek.uz/"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.33"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpSwaggerAutoTester\\": "src/"
+        }
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.1",
+        "codeception/module-rest": "^1.0.0",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-asserts": "^1.3"
+    }
+}

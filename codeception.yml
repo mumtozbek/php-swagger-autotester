@@ -1,0 +1,21 @@
+# suite config
+suites:
+    api:
+        actor: ApiTester
+        path: .
+        modules:
+            enabled:
+                - Asserts
+                -   REST:
+                        url: https://virtserver.swaggerhub.com/mumtozbek/test/1.0.0
+                        depends: PhpBrowser
+
+paths:
+    tests: tests
+    output: tests/_output
+    data: tests/_data
+    support: tests/_support
+
+settings:
+    shuffle: false
+    lint: true

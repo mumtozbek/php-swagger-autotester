@@ -1,0 +1,1348 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Loyalme API",
+        "description": "Loyalme API",
+        "termsOfService": "",
+        "contact": {
+            "email": "support@loyalme.ru",
+            "url": "https://loyalme.ru/#/about"
+        },
+        "version": "1.0"
+    },
+    "host": "loreal.loyaltycrm.ru",
+    "basePath": "/api",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/client": {
+            "get": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "List of the client",
+                "description": "List of the client",
+                "operationId": "listClients",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "current_page",
+                        "in": "query",
+                        "description": "Current page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "Page size",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Parametr of the filter by Record ID",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Client email",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Client phone",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Client name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Client last name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "birthdate",
+                        "in": "query",
+                        "description": "Client birthdate",
+                        "required": false,
+                        "type": "string",
+                        "default": "1988-06-17"
+                    },
+                    {
+                        "name": "attributes",
+                        "in": "query",
+                        "description": "Attributes to filter by",
+                        "required": false,
+                        "type": "string",
+                        "default": "{\"field\":\"value\"}"
+                    },
+                    {
+                        "name": "client_hash",
+                        "in": "query",
+                        "description": "Client hash",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "external_id",
+                        "in": "query",
+                        "description": "Client external identifier",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "point_id",
+                        "in": "query",
+                        "description": "Client point of registration",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/ClientResponseData"
+                                    }
+                                },
+                                "meta": {
+                                    "properties": {
+                                        "pagination": {
+                                            "$ref": "#/definitions/PaginationData"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Create client",
+                "description": "Error codes (code):\n           <b>1000</b> - Invalid value for the point_id parameter\n           <b>1001</b> - point_id parameter not passed\n           <b>1002</b> - Invalid value for the brand_id parameter\n           <b>1003</b> - brand_id parameter not passed\n           <b>1004</b> - Invalid value for the person_id parameter\n           <b>1005</b> - person_id parameter not passed",
+                "operationId": "createClient",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "clientBody",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ClientBodyData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ClientResponseData"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/client/{id}": {
+            "get": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Show client",
+                "description": "Show client",
+                "operationId": "showClient",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Record ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ClientResponseData"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Edit client",
+                "description": "Error codes (code):\n           <b>1000</b> - Invalid value for the point_id parameter\n           <b>1001</b> - point_id parameter not passed\n           <b>1002</b> - Invalid value for the brand_id parameter\n           <b>1003</b> - brand_id parameter not passed\n           <b>1004</b> - Invalid value for the person_id parameter\n           <b>1005</b> - person_id parameter not passed",
+                "operationId": "editClient",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Record ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "clientBody",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ClientBodyData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ClientResponseData"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Delete client",
+                "description": "Delete client",
+                "operationId": "deleteClient",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Record ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/product": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "List of the product",
+                "description": "List of the product",
+                "operationId": "listProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "current_page",
+                        "in": "query",
+                        "description": "Current page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "Page size",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Parametr of the filter by Record ID",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Parametr of the filter by record title",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "barcode",
+                        "in": "query",
+                        "description": "Parametr of the filter by record barcode",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Parametr of the filter by record price",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "is_active",
+                        "in": "query",
+                        "description": "Parametr of the filter by record is active: 0 - no, 1 - yes",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "type_id",
+                        "in": "query",
+                        "description": "Parametr of the filter by type. 1 \u2013 product, 2- sample, 3 - gift",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "ext_item_id",
+                        "in": "query",
+                        "description": "Parametr of the filter by external item id.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "ext_item_name",
+                        "in": "query",
+                        "description": "Parametr of the filter by external item name.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "point_id",
+                        "in": "query",
+                        "description": "Parametr of the filter by point of sale.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "categories[]",
+                        "in": "query",
+                        "description": "Categories to filter by",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "attributes",
+                        "in": "query",
+                        "description": "Attributes to filter by",
+                        "required": false,
+                        "type": "string",
+                        "default": "{\"field\":\"value\"}"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/ProductResponseData"
+                                    }
+                                },
+                                "meta": {
+                                    "properties": {
+                                        "pagination": {
+                                            "$ref": "#/definitions/PaginationData"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create product",
+                "description": "Create product",
+                "operationId": "createProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "productBody",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ProductCreateData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ProductResponseData"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/product/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Show product",
+                "description": "Show product",
+                "operationId": "showProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Record ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ProductResponseData"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Edit product",
+                "description": "Edit product",
+                "operationId": "editProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Record ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "productBody",
+                        "in": "body",
+                        "description": "Available fields for editing must be taken from the 'Show product' query",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "example": "value"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ProductResponseData"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/ApiErrorValidation"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete product",
+                "description": "Delete product",
+                "operationId": "deleteProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Record ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "ApiErrorValidation": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "errors": {
+                    "type": "object"
+                },
+                "status_code": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "ApiResponse": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "integer"
+                },
+                "status_code": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "Attribute": {
+            "properties": {
+                "attribute_key": {
+                    "description": "Client custom attribute id",
+                    "type": "string",
+                    "example": "attribute_value"
+                }
+            },
+            "type": "object"
+        },
+        "CarbonObject": {
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "timezone_type": {
+                    "type": "integer"
+                },
+                "timezone": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "ClientBodyData": {
+            "properties": {
+                "point_id": {
+                    "description": "Client point id of registration",
+                    "type": "integer"
+                },
+                "brand_id": {
+                    "description": "Client brand id of registration",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Client name",
+                    "type": "string"
+                },
+                "last_name": {
+                    "description": "Client last name",
+                    "type": "string"
+                },
+                "middle_name": {
+                    "description": "Client middle name",
+                    "type": "string"
+                },
+                "birthdate_select": {
+                    "$ref": "#/definitions/SelectData"
+                },
+                "gender": {
+                    "description": "Gender of the client. 0 - not selected, 1 - male, 2 - female",
+                    "type": "integer"
+                },
+                "other_phones": {
+                    "description": "Client phone list",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "default": "79871234567"
+                    }
+                },
+                "other_phones_subscribe": {
+                    "description": "List of client phone subscription statuses. 1 - subscribed, 0 - not subscribed",
+                    "type": "array",
+                    "items": {
+                        "default": 0,
+                        "enum": [
+                            0,
+                            1
+                        ]
+                    }
+                },
+                "other_emails": {
+                    "description": "Client email list",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "default": "user@example.com"
+                    }
+                },
+                "other_emails_subscribe": {
+                    "description": "List of client email subscription statuses. 1 - subscribed, 0 - not subscribed",
+                    "type": "array",
+                    "items": {
+                        "default": 0,
+                        "enum": [
+                            0,
+                            1
+                        ]
+                    }
+                },
+                "address": {
+                    "description": "Client address",
+                    "type": "string"
+                },
+                "passport_seria": {
+                    "description": "Client passport seria",
+                    "type": "string"
+                },
+                "passport_number": {
+                    "description": "Client passport number",
+                    "type": "string"
+                },
+                "passport_issued_date_select": {
+                    "$ref": "#/definitions/SelectData"
+                },
+                "passport_issued_by": {
+                    "description": "Client passport issued by",
+                    "type": "string"
+                },
+                "attribute": {
+                    "$ref": "#/definitions/Attribute"
+                },
+                "signature_code": {
+                    "description": "Client signature in base64 string format",
+                    "type": "string"
+                },
+                "person_id": {
+                    "description": "Client person id",
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "ClientHash": {
+            "properties": {
+                "id": {
+                    "description": "ID",
+                    "type": "integer"
+                },
+                "client_hash": {
+                    "description": "Client hash",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ClientResponseData": {
+            "properties": {
+                "id": {
+                    "description": "Record ID",
+                    "type": "integer"
+                },
+                "point_id": {
+                    "description": "Point registration ID",
+                    "type": "integer"
+                },
+                "brand_id": {
+                    "description": "Point of contact ID",
+                    "type": "integer"
+                },
+                "person_id": {
+                    "description": "The consultant ID who registered the client",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the client",
+                    "type": "string"
+                },
+                "middle_name": {
+                    "description": "The middle name of the client",
+                    "type": "string"
+                },
+                "last_name": {
+                    "description": "The last name of the client",
+                    "type": "string"
+                },
+                "birthdate": {
+                    "$ref": "#/definitions/CarbonObject"
+                },
+                "gender": {
+                    "description": "Gender of the client. 0 - not selected, 1 - male, 2 - female",
+                    "type": "integer"
+                },
+                "address": {
+                    "description": "Address of the client",
+                    "type": "integer"
+                },
+                "passport_seria": {
+                    "description": "Seria of the passport of the client",
+                    "type": "string"
+                },
+                "passport_number": {
+                    "description": "Number of the passport of the client",
+                    "type": "string"
+                },
+                "passport_issued_date": {
+                    "description": "Issued date of the passport of the client",
+                    "type": "string"
+                },
+                "passport_issued_by": {
+                    "description": "Who issued date of the passport of the client",
+                    "type": "string"
+                },
+                "phones": {
+                    "description": "Client phone list",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Phone"
+                    }
+                },
+                "phone": {
+                    "description": "First phone from phones list of the client",
+                    "type": "string"
+                },
+                "emails": {
+                    "description": "Client email list",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Email"
+                    }
+                },
+                "email": {
+                    "description": "First email from emails list of the client",
+                    "type": "string"
+                },
+                "labels": {
+                    "description": "Client label list",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Label"
+                    }
+                },
+                "points": {
+                    "description": "Client point balance",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "Client status. Status list you can clarify in support",
+                    "type": "string"
+                },
+                "created_at": {
+                    "$ref": "#/definitions/CarbonObject"
+                },
+                "updated_at": {
+                    "$ref": "#/definitions/CarbonObject"
+                },
+                "blocked_at": {
+                    "$ref": "#/definitions/CarbonObject"
+                },
+                "client_hash": {
+                    "description": "Client hashes list",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ClientHash"
+                    }
+                },
+                "external_id": {
+                    "description": "Client external identifier",
+                    "type": "string"
+                },
+                "attribute": {
+                    "description": "Client custom attributes",
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Email": {
+            "properties": {
+                "email": {
+                    "description": "Email of the client",
+                    "type": "string"
+                },
+                "subscription_status": {
+                    "description": "Subscription status of the email of the client. 1 - subscribed, 2 - unsubscribed, 3 - Not subscribed yet",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "Status of the email of the client. 1 - valid, 2 - invalid, 3 - requires verification, 4 - stop list",
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "Label": {
+            "properties": {
+                "id": {
+                    "description": "ID",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Label name",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Label description",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "PaginationData": {
+            "properties": {
+                "total": {
+                    "description": "Total of records",
+                    "type": "integer"
+                },
+                "count": {
+                    "description": "The number of items for the current page",
+                    "type": "integer"
+                },
+                "per_page": {
+                    "description": "The number of items to be shown per page",
+                    "type": "integer"
+                },
+                "current_page": {
+                    "description": "The current page number",
+                    "type": "integer"
+                },
+                "total_pages": {
+                    "description": "The number of pages",
+                    "type": "integer"
+                },
+                "links": {
+                    "description": "Links for navigation on pages",
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Phone": {
+            "properties": {
+                "phone": {
+                    "description": "Phone of the client",
+                    "type": "string"
+                },
+                "subscription_status": {
+                    "description": "Subscription status of the phone of the client. 1 - subscribed, 2 - unsubscribed, 3 - Not subscribed yet",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "Status of the phone of the client. 1 - valid, 2 - invalid, 3 - requires verification, 4 - stop list",
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "ProductCreateData": {
+            "properties": {
+                "points": {
+                    "description": "Points awarded per product",
+                    "type": "integer"
+                },
+                "ext_item_id": {
+                    "description": "External ID",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "Title",
+                    "type": "string"
+                },
+                "barcode": {
+                    "description": "Barcode",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "Price",
+                    "type": "integer"
+                },
+                "is_active": {
+                    "description": "Activity status. 0 - no, 1 - yes",
+                    "type": "integer"
+                },
+                "type_id": {
+                    "description": "Type of product. 1 \u2013 product, 2- sample, 3 - gift",
+                    "type": "integer"
+                },
+                "point_id": {
+                    "description": "Point of sale",
+                    "type": "integer"
+                },
+                "accrual_rate": {
+                    "description": "Product reward points ratio",
+                    "type": "integer"
+                },
+                "photo": {
+                    "description": "Photo link",
+                    "type": "string"
+                },
+                "categories": {
+                    "description": "Product category list. Category IDs",
+                    "type": "array",
+                    "items": {}
+                },
+                "aliases": {
+                    "description": "Product alias list",
+                    "type": "array",
+                    "items": {}
+                },
+                "customField1": {
+                    "description": "Additional field example. Additional product fields can be of type string and number. There can be an unlimited number of them.",
+                    "type": "string"
+                },
+                "customField2": {
+                    "description": "Additional field example. Additional product fields can be of type string and number. There can be an unlimited number of them.",
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "ProductResponseData": {
+            "properties": {
+                "id": {
+                    "description": "Record ID",
+                    "type": "integer"
+                },
+                "points": {
+                    "description": "Points awarded per product",
+                    "type": "integer"
+                },
+                "ext_item_id": {
+                    "description": "External ID",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "Title",
+                    "type": "string"
+                },
+                "barcode": {
+                    "description": "Barcode",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "Price",
+                    "type": "integer"
+                },
+                "is_active": {
+                    "description": "Activity status. 0 - no, 1 - yes",
+                    "type": "integer"
+                },
+                "type_id": {
+                    "description": "Type of product. 1 \u2013 product, 2- sample, 3 - gift",
+                    "type": "integer"
+                },
+                "point_id": {
+                    "description": "Point of sale",
+                    "type": "integer"
+                },
+                "accrual_rate": {
+                    "description": "Product reward points ratio",
+                    "type": "integer"
+                },
+                "photo": {
+                    "description": "Photo link",
+                    "type": "string"
+                },
+                "categories": {
+                    "description": "Product category list",
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "id": {
+                                "description": "Category ID",
+                                "type": "integer"
+                            },
+                            "title": {
+                                "description": "Category title",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "aliases": {
+                    "description": "Product alias list",
+                    "type": "array",
+                    "items": {}
+                },
+                "customField1": {
+                    "description": "Additional field example. Additional product fields can be of type string and number. There can be an unlimited number of them.",
+                    "type": "string"
+                },
+                "customField2": {
+                    "description": "Additional field example. Additional product fields can be of type string and number. There can be an unlimited number of them.",
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "SelectData": {
+            "properties": {
+                "day": {
+                    "description": "Birthday day",
+                    "type": "string",
+                    "example": "01"
+                },
+                "month": {
+                    "description": "Birthday mounth",
+                    "type": "string",
+                    "example": "02"
+                },
+                "year": {
+                    "description": "Birthday year",
+                    "type": "string",
+                    "example": "2006"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "tags": [
+        {
+            "name": "Client",
+            "description": "Clients"
+        },
+        {
+            "name": "Product",
+            "description": "Products"
+        }
+    ]
+}
